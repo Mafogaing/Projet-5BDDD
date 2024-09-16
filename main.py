@@ -1,20 +1,21 @@
 from typing import Union
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 from dotenv import load_dotenv
 import os
 
 load_dotenv()  # take environment variables from .env.
 
-print('TEST:', os.environ['TEST'])
-print('BDD_URL:', os.environ['BDD_URL'])
+# print('TEST:', os.environ['TEST'])
+# print('BDD_URL:', os.environ['BDD_URL'])
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"),name="static")
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return RedirectResponse("/static/index.html")      # {"Hello": "World"}
 
 
 @app.get("/items/{item_id}")
